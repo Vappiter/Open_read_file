@@ -7,12 +7,12 @@ def get_cook():
     pass
 def My_input():
   """Function input processing"""
-  var_input = input (f"\n Добрый! Данное приложение по кулинарной книги. \n\
+  var_input = input (f"\n Добрый! Данное приложение по кулинарной книги.\n\
 Приложение поддерживает следующие команды:\n\
-R - считать книгу рецептов из файла \n\
+R - считать книгу рецептов из файла\n\
 L - показать рецепты содержащиеся в книге\n\
 A - добавить рецепт\n\
-S - расчитать количество ингредиентов на количество гостей \n\
+S - расчитатaь количество ингредиентов на количество гостей\n\
 D - удалить рецепт\n\
 Q - выйти из приложения\
 \n Введите команду: ")
@@ -55,7 +55,7 @@ def file_read():
         print (f'\n Из файла перенесено в книгу {count_plus} рец.\n')    
 def list_cook():
   if len(cook_book) == 0:
-      print (f'Необходимо сначало считать рецепты из файла или ввести рецепт')  
+      print (f'Необходимо сначало считать рецепты из файла рецептов или ввести рецепт')  
   else:
       cook = cook_book.keys()   
       print ('Книга содержит такие рецепты:\n')
@@ -74,7 +74,19 @@ def add_cook():
         temp_data.append ( {'ingredient_name':ingredient_name.strip(),'quantity':int(quantity.strip()), 'measure':measure.strip()})
         cook_book[var_name_cook] = temp_data
     print (f'\n Рецепт {var_name_cook} добавлен в книгу рецептов.\n')    
-        
+    var_add_file = input ('\n Добавить рецепт в файл (Y/N)')    
+    var_add_file =  var_add_file.upper()
+    if var_add_file == 'Y':
+      os.chdir ("Z:\\2021-09-23_PYTHON\\Open_read_file")  
+      with open('recipes.txt', 'a', encoding='utf-8') as file_wr:
+          file_wr.write ('\n')
+          file_wr.write(var_name_cook + '\n')
+          file_wr.write(str(count_ingredient) + '\n')
+          for i1 in range(count_ingredient): 
+            ingredient_name, quantity, measure = cook_book[var_name_cook][i1].values()
+            file_wr.write(ingredient_name + '|' + str(quantity) + '|' + measure + '\n')       
+    else:
+        print (f'\n Рецепт {var_name_cook} не добавлен в файл рецептов.\n')
 if __name__ == '__main__':
     while My_input() != "Q":
         My_input()
