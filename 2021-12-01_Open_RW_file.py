@@ -87,6 +87,19 @@ def add_cook():
             file_wr.write(ingredient_name + '|' + str(quantity) + '|' + measure + '\n')       
     else:
         print (f'\n Рецепт {var_name_cook} не добавлен в файл рецептов.\n')
+def del_cook():
+#   if len(cook_book) == 0:
+#       print (f'Книга рецептов пуста')  
+#   else:
+#       cook = cook_book.keys()   
+#       print ('Книга содержит такие рецепты:\n')
+#       i1 = 1
+#       for cook in cook_book.keys():
+#         print (f'{i1}. Рецепт {cook}')  
+#         i1+=1          
+#       var_del_cook = input('Какой рецепт удаляем, введите его №:')
+  pass    
+
 if __name__ == '__main__':
     while My_input() != "Q":
         My_input()
