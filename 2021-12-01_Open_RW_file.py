@@ -1,3 +1,4 @@
+from functools import WRAPPER_ASSIGNMENTS
 from pprint import pprint
 import os
 
@@ -14,6 +15,7 @@ L - показать рецепты содержащиеся в книге\n\
 A - добавить рецепт\n\
 S - расчитатaь количество ингредиентов на количество гостей\n\
 D - удалить рецепт\n\
+T - решение задачи №3 из домашенего задания\n\
 Q - выйти из приложения\
 \n Введите команду: ")
   var_input = var_input.upper()
@@ -28,6 +30,8 @@ Q - выйти из приложения\
     pass
   elif var_input == 'L':
    input_dishes_person_or_list_cook()
+  elif var_input == 'T': 
+    solving_problem_three()
   elif var_input == 'Q':
     exit()
   else:
@@ -103,30 +107,29 @@ def del_cook():
 def input_dishes_person_or_list_cook(f_list = 0):
  
  ''' Displays a list of recipes and launches function Сounts the number indgedients '''
-  
-  temp_cook =[]
-  if len(cook_book) == 0:
-      print (f'Необходимо сначало считать рецепты из файла рецептов или ввести рецепт')  
-  else:
-      print ('Книга содержит такие рецепты:\n')
-      i1 = 1
-      for cook in cook_book.keys():
-        print (f'{i1}. Рецепт {cook}')  
-        i1+=1
-  if f_list != 0:
-   print ('Ввведите через запятую номера блюд, которые надо приготовить:') 
-   var_number_cook = [int(i) for i in input().split(',')]
-   i1 = 1
-   for cook in cook_book.keys():
-     if i1 in var_number_cook:
-      temp_cook.append(cook) 
-      i1+=1
-     else:
-        i1+=1 
-   var_person_counter = input('Ввведите количество гостей:')
-   get_shop_list_by_dishes (temp_cook,var_person_counter)
-  else:
-    return
+ temp_cook =[]
+ if len(cook_book) == 0:
+     print (f'Необходимо сначало считать рецепты из файла рецептов или ввести рецепт')  
+ else:
+     print ('Книга содержит такие рецепты:\n')
+     i1 = 1
+     for cook in cook_book.keys():
+       print (f'{i1}. Рецепт {cook}')  
+       i1+=1
+ if f_list != 0:
+  print ('Ввведите через запятую номера блюд, которые надо приготовить:') 
+  var_number_cook = [int(i) for i in input().split(',')]
+  i1 = 1
+  for cook in cook_book.keys():
+    if i1 in var_number_cook:
+     temp_cook.append(cook) 
+     i1+=1
+    else:
+       i1+=1 
+  var_person_counter = input('Ввведите количество гостей:')
+  get_shop_list_by_dishes (temp_cook,var_person_counter)
+ else:
+   return
   
 def get_shop_list_by_dishes(dishes, person_count):
   
@@ -141,6 +144,34 @@ def get_shop_list_by_dishes(dishes, person_count):
   return temp_dishes
 
 
+def counter_line_file(file):
+  lines = 0
+  with open(file, encoding='utf-8') as file_str:
+    lines = len(file_str.readlines())
+  print(lines)
+  return lines
+
+def solving_problem_three():
+  dict_file = {}
+  file_content = []
+  os.chdir ("Z:\\2021-09-23_PYTHON\\Open_read_file")
+  for var1 in range (1,4):
+    name_file = str(var1) + '.txt'
+    dict_file[name_file] = counter_line_file(name_file)
+  sorted_file = sorted(dict_file.items(), key=lambda x: x[1])
+  for var1 in range (0,3):
+    file_content.append(sorted_file[var1][0] +'\n')
+    file_content.append(str(sorted_file[var1][1]) + '\n') 
+    with open(sorted_file[var1][0], encoding='utf-8') as var_file:
+       for var2 in range (0, sorted_file[var1][1]):
+         file_content.append(var_file.readline())
+  with open('new.txt', 'w', encoding='utf-8') as file_wr:
+    for var1 in range (0, len (file_content)):
+      if file_content[var1].find('\n') != -1:
+       file_wr.write(file_content[var1])
+      else:
+       file_wr.write(file_content[var1] + '\n')
+  print (file_content)
 if __name__ == '__main__':
     while My_input() != "Q":
         My_input()
